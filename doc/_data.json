@@ -121,8 +121,17 @@
                     "sections": 
 					[
                         {
-                            "section": "The HTTPInputApplication application includes one project that is imported into your workspace."
-                        }
+                            "section": "When you click Import, two Applications will be created in your workspace: CallableAuditToFile and RouteEvents."
+                        },
+                        {
+                            "section": "The RouteEvents application contains a single flow, which exposes a raw HTTP service that you can call externally, or with the Unit Test capability in the Integration Toolkit. It is designed to take in JSON data and route to one of 3 output files, depending on whether a key field is there and what value it contains. It also makes a call to the other Application CallableAuditToFile."
+                        },
+                        {
+                            "section": "The CallableAuditToFile application contains a single flow which is only exposed to other message flows. It is designed to build up an audit record in a file, and archive that file when told to do so. Both of those are exposed using the CallableFlowInput node."
+                        },
+			{
+			    "section": "These are explained in more detail when you move on to the Prepare tab, along with setup steps you need to complete before running the flows."
+			}
                     ]
                 },
                 "helpLinks": 
@@ -134,6 +143,11 @@
                             "title": "Knowledge Center link to ",
                             "description": "Developing integration solutions by using applications",
                             "link": "com.ibm.etools.mft.doc/bi12002_.htm"
+                        },
+                        {
+                            "title": "Knowledge Center link to ",
+                            "description": "Callable message flows",
+                            "link": "com.ibm.etools.mft.doc/cl23141_.htm"
                         }
                     ]
                 },
