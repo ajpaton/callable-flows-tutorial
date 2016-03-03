@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<MessagePool xmlns="http://wwww.ibm.com/iib/test/1.0.0">
+    <InputMessage timestamp="1456997958031" nodeId="FCMComposite_1_1" name="Simple input message" id="1456997958031-372">
+        <plainText>%7B%22tag%22%3A%22value%22%2C+%22tag2%22%3A%22values2%22%7D</plainText>
+    </InputMessage>
+    <InputMessage timestamp="1457000097906" nodeId="FCMComposite_1_4" name="Force finish file" id="1457000097906-620">
+        <plainText>Body+is+ignored+for+this+path</plainText>
+    </InputMessage>
+    <InputMessage timestamp="1457002374979" nodeId="FCMComposite_1_1" name="Input message with low value" id="1457002374979-767">
+        <plainText>%7B%22tag%22%3A%22my+low+value+input+message%22%2C%22value%22%3A%222%22%7D</plainText>
+    </InputMessage>
+    <InputMessage timestamp="1457002420520" nodeId="FCMComposite_1_1" name="Input message with high value" id="1457002420520-816">
+        <plainText>%7B%22tag%22%3A%22my+high+value+message%22%2C%22value%22%3A%221000%22%7D</plainText>
+    </InputMessage>
+</MessagePool>
