@@ -33,7 +33,7 @@
         "_common": 
 		{
             "name": "Callable Flows",
-            "shortDescription": "Learn how to use the CallableFlowInvoke, CallableFlowInput and CallableFlowReply nodes to split processing between flows and servers.",
+            "shortDescription": "Learn how to use the CallableFlowInvoke, CallableFlowInput and CallableFlowReply nodes to divide processing between message flows.",
             "durationText": "This tutorial takes approximately",
             "durationTime": "15 minutes",
             "_resourceToOpenComment": "The ID of the first resource to open when the user imports the tutorial. Resource IDs are defined in the repo_metadata.json Tutorials listing on ot4i.",
@@ -60,7 +60,7 @@
                     "title": "Testing Callable Flows locally"
                 },
                 {
-                    "title": "Configuring the Switch Server for remote use"
+                    "title": "Dynamically controlling the CallableFlowInvoke node"
                 }
             ],
             "outcomesName": "Learning outcomes",
@@ -78,13 +78,13 @@
                 "sections": 
 				[
                     {
-                        "section": "This tutorial shows how different parts of an integration application can be split between different processes using Callable Flow nodes.  The example uses an Integration which provides a raw HTTP/JSON service. The data it receives needs to be routed to the correct file for processing by another business application.  The Integration also needs to keep an audit trail of all the requests received, regardless of where they were routed."
+                        "section": "This tutorial shows how different parts of an integration application can be split between different processes using Callable Flow nodes.  The example uses an Integration Application which provides a raw HTTP/JSON service, and two separate Integration Applications which provide differently formatted timestamps for use in other flows."
                     },
                     {
-                        "section": "This example uses a Callable Flow to provide that audit service, so it can be invoked from one or more message flows, but is not exposed outside the Integration Bus environment."
+                        "section": "This example uses a Callable Flow to provide that timestamp service, so it can be invoked from one or more message flows, but is not exposed outside the Integration Bus environment. A Mapping node is used to include the result of invoking the callable flow in the JSON response from the main flow."
                     },
                     {
-                        "section": "The example can be run locally on the TESTNODE associated with the Integration Toolkit, and with some further configuration the same example can be used to show processing being split between different integration server processes, or even across different physical machines."
+                        "section": "A further extension to this scenario is that the calling flow can dynamically switch which flow it calls based on input data. You can also deploy updates to the Callable Flows without changing or redeploying the invoking flow."
                     }
                 ]
             },
@@ -121,13 +121,16 @@
                     "sections": 
 					[
                         {
-                            "section": "When you click Import, two Applications will be created in your workspace: CallableAuditToFile and RouteEvents."
+                            "section": "When you click Import, four Applications will be created in your workspace: <span class='application'>HTTPParentApplication</span>, <span class='application'>TestCallableFlows</span>, <span class='application'>CallableTimestamp</span> and <span class='application'>CallableTimestampAlternate</span>."
                         },
                         {
-                            "section": "The RouteEvents application contains a single flow, which exposes a raw HTTP service that you can call externally, or with the Unit Test capability in the Integration Toolkit. It is designed to take in JSON data and route to one of 3 output files, depending on whether a key field is there and what value it contains. It also makes a call to the other Application CallableAuditToFile."
+                            "section": "<span class='application'>CallableTimestamp</span> and <span class='application'>CallableTimestampAlternate</span> are two separate Applications which implement a single message flow with a CallableFlowInput and CallableFlowReply node. Both applications are configured with the same Endpoint Name. In this tutorial, these two applications will run in the same integration server as the other flows, but with additional configuration they can run on different servers or even on different machines."
                         },
                         {
-                            "section": "The CallableAuditToFile application contains a single flow which is only exposed to other message flows. It is designed to build up an audit record in a file, and archive that file when told to do so. Both of those are exposed using the CallableFlowInput node."
+                            "section": "<span class='application'>TestCallableFlows</span> contains a simple HTTP message flow which was used to unit test the two Callable flows when they were being developed. It calls both of them in turn and writes both of their responses into an output JSON message."
+                        },
+                     {
+                            "section": "<span class='application'>HTTPParentApplication</span> has a single flow called <span class='msgflow'>TimestampMyJSON</span>. This exposes a raw HTTP service and uses a CallableFlowInvoke node to call one of the possible Timestamp flows. It writes this into the reply. It also allows a value in the input JSON to be specified which allows you to dynamically invoke a callable flow from a different Application name, overriding the default value specified on the CallableFlowInvoke node."
                         },
 			{
 			    "section": "These are explained in more detail when you move on to the Prepare tab, along with setup steps you need to complete before running the flows."
@@ -173,13 +176,19 @@
                     "sections": 
 					[
                         {
-                            "section": "The HTTPInputApplication application is shown in the Application Development view of your workspace."
+                            "section": "You should see the 4 Integration Applications in your workspace, and the <span class='msgflow'>TimestampMyJSON</span> flow will be open."
                         },
                         {
-                            "section": ""
+                            "section": "In message flow <span class='msgflow'>TimestampMyJSON</span> there is a CallableFlowInvoke node with a label starting <span class='resource'>Call Timestamp Flow, updates LE</span>. This is configured with two names: the Target Application and the Target Endpoint Name. These are used to resolve which callable flow is used."
                         },
                         {
-                            "section": "The application will be deployed to your default integration server. The message flow is then running on your integration server and ready to process messages."
+                            "section": "The mapping node <span class='resource'>Apply any LE overrides</span> will set values under <span class='varname'>LocalEnvironment/Destination/CallableFlow/Invoke/targetApplication</span> if they are present in the input JSON message. This allows a differently named Application to be used for the <span class='resource'>CallableFlowInvoke</span> node, overriding the node option."
+                        },
+                        {
+                            "section": "The <span class='msgflow'>testCallableTimestamp</span> message flow in application <span class='application'>TestCallableFlows</span> is simpler and just invokes both callable flows in sequence, without any overrides. The updates made by both flows build up in the JSON section of the message tree."
+                        },
+                        {
+                            "section": "Before running either of these flows, you need to deploy the Applications which provide the callable flow service. Use the Deploy link to do this. Once that has been done, move on to the Run tab to exercise the flows and see them working."
                         }
                     ]
                 },
@@ -195,7 +204,7 @@
                         }
                     ]
                 },
-                "actions-removed": 
+                "actions": 
 				{
                     "title": "Prepare Actions",
                     "details": 
