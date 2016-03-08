@@ -176,10 +176,10 @@
                     "sections": 
 					[
                         {
-                            "section": "You should see the 4 Integration Applications in your workspace, and the <span class='msgflow'>TimestampMyJSON</span> flow will be open."
+                            "section": "You will see the 4 Integration Applications in your workspace, and the <span class='msgflow'>TimestampMyJSON</span> flow will be opened."
                         },
                         {
-                            "section": "In message flow <span class='msgflow'>TimestampMyJSON</span> there is a CallableFlowInvoke node with a label starting <span class='resource'>Call Timestamp Flow, updates LE</span>. This is configured with two names: the Target Application and the Target Endpoint Name. These are used to resolve which callable flow is used."
+                            "section": "In message flow <span class='msgflow'>TimestampMyJSON</span> there is a CallableFlowInvoke node with a label starting <span class='resource'>Call Timestamp Flow, updates body</span>. This is configured with two names: the Target Application and the Target Endpoint Name. These are used to resolve which callable flow is used."
                         },
                         {
                             "section": "The mapping node <span class='resource'>Apply any LE overrides</span> will set values under <span class='varname'>LocalEnvironment/Destination/CallableFlow/Invoke/targetApplication</span> if they are present in the input JSON message. This allows a differently named Application to be used for the <span class='resource'>CallableFlowInvoke</span> node, overriding the node option."
@@ -187,8 +187,8 @@
                         {
                             "section": "The <span class='msgflow'>testCallableTimestamp</span> message flow in application <span class='application'>TestCallableFlows</span> is simpler and just invokes both callable flows in sequence, without any overrides. The updates made by both flows build up in the JSON section of the message tree."
                         },
-                        {
-                            "section": "Before running either of these flows, you need to deploy the Applications which provide the callable flow service. Use the Deploy link to do this. Once that has been done, move on to the Run tab to exercise the flows and see them working."
+			{
+			    "section":"The two Applications providing callable flows are built into a BAR file <span class='resource'>callable_flows.bar</span>. Before running either of these flows, you need to deploy the Applications which provide the callable flow service. Use the Deploy link to do this. Once that has been done, move on to the Run tab to exercise the flows and see them working."
                         }
                     ]
                 },
@@ -226,43 +226,42 @@
                     "sections": 
 					[
                         {
-                            "section": "The HTTPInputApplication application is shown in the Application Development view of your workspace.",
+                            "section": "Use the <span class='resource'>TimestampMyJSON.msgflow</span> to run this tutorial. The message flow should already be open in the editor, and you should have already deployed the <span class='resource'>callable_flows.bar</span> to an integration server on your TESTNODE.",
                             "steps": 
 							{
                                 "type": "ordered",
                                 "details": 
 								[
                                     {
-                                        "details": "Open the HTTPInputMessageFlow, and click the Flow Exerciser icon <img src='http://ot4i.github.io/ot4i.tutorials//dist/images/icons/iib/startFlowExerciser.png' alt='' /> to start recording the message path through the flow."
+                                        "details": "Open <span class='resource'>TimestampMyJSON.msgflow</span>, and click the Flow Exerciser icon <img src='http://ot4i.github.io/ot4i.tutorials//dist/images/icons/iib/startFlowExerciser.png' alt='' /> to enable unit testing on the flow. If you are prompted where to deploy, ensure you deploy to the same integration server as the <span class='application'>CallableTimestamp</span> applications."
                                     },
                                     {
                                         "details": "Click the Send Message icon <img src='http://ot4i.github.io/ot4i.tutorials/dist/images/icons/iib/sendMessage.png' alt='' /> to select a message to send to the flow."
                                     },
                                     {
-                                        "details": "Choose the ExampleInputMessage1, edit the message data if you like, and click Send. Your request message is sent to the HTTP input node.",
-                                        "substeps": 
-										{
-                                            "type": "unordered",
-                                            "details": 
-											[
-                                                {
-                                                    "details": "Substep one"
-                                                },
-                                                {
-                                                    "details": "Substep two"
-                                                }
-                                            ]
-                                        }
-                                    }
+                                        "details": "Choose the input message <span class='resource'>JSON message, no overrides</span>, and click Send. Your request message is sent to the HTTP input node."
+				    },
+				    {
+                                        "details": "When the list of actions is shown, click on the Received HTTP reply message... item to show the output from the flow. Note that a timestamp has been added into the output message."
+				    },
+				    {
+                                        "details": "After you close the dialog, the path taken through the messageflow is highlighted. Click on the message icon on each connection to see how the tree is updated by each node."
+				    },
+				    {
+                                        "details": "Once you have tried the first message, click Send Message <img src='http://ot4i.github.io/ot4i.tutorials/dist/images/icons/iib/sendMessage.png' alt='' /> again and select the <span class='resource'>JSON message, override target application</span> message. Note that it contains an additional tag <span class='userinput'>overriddenApplicationName</span> with value <span class='userinput'>CallableTimestampAlternate</span>."
+					},
+				    {
+					"details": "Send that through the flow and note the output contains <span class='userinput'>Alternate timestamp</span>. If you look at the message tree before the CallableFlowInvoke node, note that a value is set in LocalEnvironment to override the targetApplication, which makes the flow under test invoke a different Callable Flow."
+				    }
                                 ]
                             }
                         },
-                        {
-                            "section": "After the request message is processed, the message path is automatically highlighted on the message flow."
-                        },
-                        {
-                            "section": "Click on any connection to see the data that passed through that connection. You can see that the request (input) message data has two fields named InputField1 and InputField2. The response (output) message has converted this to fields named OutputField1 and OutputField2."
-                        }
+			{
+			    "section": "You can further experiment with this scenario by changing the <span class='application'>CallableTimestamp</span> application and redeploying it, and then sending a message through the unchanged <span class='application'>HTTPParentApplication</span>. Note that the behaviour changes immediately without needing to change or redeploy the invoking flow."
+			},
+			{
+			    "section": "This tutorial shows the invoking and callable flow running in the same integration server, which requires no additional setup. You can also use these applications to experiment with running the invoking flow and the callable flow on different integration servers or different machines, but some additional configuration is required to enable cross-server communication. Look at the Knowledge Center links below for information on topologies in which these flows can run, and how to set them up."
+			}
                     ]
                 },
                 "helpLinks": 
@@ -272,24 +271,18 @@
 					[
                         {
                             "title": "Knowledge Center link to ",
-                            "description": "Developing integration solutions by using applications",
-                            "link": "com.ibm.etools.mft.doc/bi12002_.htm"
+                            "description": "Developing callable message flows",
+                            "link": "com.ibm.etools.mft.doc/cl23143_.htm"
+                        },
+                        {
+                            "title": "Knowledge Center link to ",
+                            "description": "Preparing the environment for callable flows",
+                            "link": "com.ibm.etools.mft.doc/cl23148_.htm"
                         },
                         {
                             "title": "Knowledge Center link to ",
                             "description": "Testing your message flow by using the Flow exerciser",
                             "link": "com.ibm.etools.mft.doc/rt26110_.htm"
-                        }
-                    ]
-                },
-                "actions": 
-				{
-                    "title": "Run Actions",
-                    "details": 
-					[
-                        {
-                            "name": "Deploy",
-                            "method": "deployArtifacts()"
                         }
                     ]
                 },
