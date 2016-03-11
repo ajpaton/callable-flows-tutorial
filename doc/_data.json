@@ -121,13 +121,13 @@
                     "sections": 
 					[
                         {
-                            "section": "When you click Import, three applications will be created in your workspace: <span class='application'>CallingParentApplication</span>, <span class='application'>TestCallableFlows</span>, <span class='application'>CallableTimestamp</span> and <span class='application'>CallableTimestampAlternate</span>."
+                            "section": "When you click Import, three applications will be created in your workspace: <span class='application'>CallingParentApplication</span>, <span class='application'>CallableTimestamp</span> and <span class='application'>CallableTimestampAlternate</span>."
                         },
                         {
                             "section": "<span class='application'>CallableTimestamp</span> and <span class='application'>CallableTimestampAlternate</span> each implement a single message flow with a CallableInput and CallableReply node. Both applications are configured with the same Endpoint Name. In this tutorial, these two applications will run in the same integration server as the other flows. With additional configuration they can run on different servers or even on different machines."
                         },
                         {
-                            "section": "<span class='application'>CallingParentApplication</span> has a single flow called <span class='msgflow'>TimestampMyJSON</span>. This exposes a raw HTTP service and uses a CallableFlowInvoke node to call one of the possible Timestamp flows. TimestampMyJSON also allows a value in the input JSON to be specified which allows you to dynamically invoke a callable flow from a different application, overriding the default value specified on the CallableFlowInvoke node."
+                            "section": "<span class='application'>CallingParentApplication</span> has a single flow called <span class='msgflow'>TimestampMyJSON</span>. This exposes a raw HTTP service and uses a CallableFlowInvoke node to call one of the possible Timestamp flows. <span class='msgflow'>TimestampMyJSON</span> also allows a value in the input JSON to be specified which allows you to dynamically invoke a callable flow from a different application, overriding the default value specified on the CallableFlowInvoke node."
                         },
 			{
 			    "section": "These are explained in more detail when you move on to the Prepare tab, along with setup steps you need to complete before running the flows."
