@@ -127,9 +127,6 @@
                             "section": "<span class='application'>CallableTimestamp</span> and <span class='application'>CallableTimestampAlternate</span> each implement a single message flow with a CallableInput and CallableReply node. Both applications are configured with the same Endpoint Name. In this tutorial, these two applications will run in the same integration server as the other flows. With additional configuration they can run on different servers or even on different machines."
                         },
                         {
-                            "section": "<span class='application'>TestCallableFlows</span> contains a simple HTTP message flow which was used to unit test the two Callable flows when they were being developed. It calls both of them in turn and writes both of their responses into an output JSON message."
-                        },
-                     {
                             "section": "<span class='application'>CallingParentApplication</span> has a single flow called <span class='msgflow'>TimestampMyJSON</span>. This exposes a raw HTTP service and uses a CallableFlowInvoke node to call one of the possible Timestamp flows. TimestampMyJSON also allows a value in the input JSON to be specified which allows you to dynamically invoke a callable flow from a different application, overriding the default value specified on the CallableFlowInvoke node."
                         },
 			{
@@ -176,10 +173,7 @@
                     "sections": 
 					[
                         {
-                            "section": "You will see the 3 applications added to your workspace, and the <span class='msgflow'>TimestampMyJSON</span> flow will be opened."
-                        },
-                        {
-                            "section": "In message flow <span class='msgflow'>TimestampMyJSON</span> there is a CallableFlowInvoke node with a label starting <span class='resource'>Call Timestamp Flow, updates body</span>. This is configured with two names: the Target Application and the Target Endpoint Name. These are used to resolve which callable flow is used."
+                            "section": "Look inside application <span class='application'>CallingParentApplication</span>. There is a message flow <span class='msgflow'>TimestampMyJSON</span> which has a CallableFlowInvoke node, with a label starting <span class='resource'>Call Timestamp Flow, updates body</span>. This is configured with two names: the Target Application and the Target Endpoint Name. These are used to resolve which callable flow is used."
                         },
                         {
                             "section": "The mapping node <span class='resource'>Apply any LE overrides</span> will set the value of <span class='varname'>LocalEnvironment/Destination/CallableFlow/Invoke/targetApplication</span> if set in the input JSON message. This allows a differently named application to be called from the <span class='resource'>CallableFlowInvoke</span> node, overriding the node option."
@@ -198,7 +192,12 @@
                             "title": "Knowledge Center link to ",
                             "description": "Developing integration solutions by using integration services",
                             "link": "com.ibm.etools.mft.doc/bi12002_.htm"
-                        }
+                        },
+                        {
+                            "title": "Knowledge Center link to ",
+                            "description": "Developing callable message flows",
+                            "link": "com.ibm.etools.mft.doc/cl23143_.htm"
+                        },
                     ]
                 },
                 "actions": 
@@ -230,7 +229,7 @@
                                 "details": 
 								[
                                     {
-                                        "details": "Open <span class='resource'>TimestampMyJSON.msgflow</span>, and click the Flow Exerciser icon <img src='http://ot4i.github.io/ot4i.tutorials//dist/images/icons/iib/startFlowExerciser.png' alt='' /> to enable unit testing on the flow. If you are prompted where to deploy, ensure you deploy to the same integration server as the <span class='application'>CallableTimestamp</span> applications."
+                                        "details": "Open <span class='resource'>TimestampMyJSON.msgflow</span>, and click the Flow Exerciser icon <img src='http://ot4i.github.io/ot4i.tutorials//dist/images/icons/iib/startFlowExerciser.png' alt='' /> to deploy and start testing the flow. If you are prompted where to deploy, ensure you deploy to the same integration server as the <span class='application'>CallableTimestamp</span> applications."
                                     },
                                     {
                                         "details": "Click the Send Message icon <img src='http://ot4i.github.io/ot4i.tutorials/dist/images/icons/iib/sendMessage.png' alt='' /> to select a message to send to the flow."
